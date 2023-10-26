@@ -5,20 +5,39 @@ Entradas: monto(int)
 Salidas: desglosarBilletes(str)
 Restricciones: monto(Debe ser un número entero positivo) 
 '''
+def desglosarBilletesAuxiliar(monto, validador):
+    if(validador == 0):
+        cantidad = monto//20000
+        lista, cantidadBilletes = desglosarBilletesAuxiliar(monto-(20000*cantidad), validador+1)
+        if(cantidadBilletes+cantidad > 15):
+            return -1
+        else:
+            return [[cantidad, 20000]]+lista
+    
+    if(validador == 1):
+        cantidad = monto//10000
+        lista, cantidadBilletes = desglosarBilletesAuxiliar(monto-(10000*cantidad), validador+1)
+        return [[cantidad, 10000]]+lista, cantidadBilletes+cantidad
+    
+    if(validador == 2):
+        cantidad = monto//5000
+        lista, cantidadBilletes = desglosarBilletesAuxiliar(monto-(5000*cantidad), validador+1)
+        return [[cantidad, 5000]]+lista, cantidadBilletes+cantidad
+    
+    if(validador == 3):
+        cantidad = monto//2000
+        lista, cantidadBilletes = desglosarBilletesAuxiliar(monto-(2000*cantidad), validador+1)
+        return [[cantidad, 2000]]+lista, cantidadBilletes+cantidad
+    
+    if(validador == 4):
+        cantidad = monto//1000
+        return [[cantidad, 1000]],cantidad
+
+
 def desglosarBilletes(monto):
-    if monto % 1000 != 0:
+    if(monto%1000 != 0):
         return -1
-
-    denominaciones = [20000, 10000, 5000, 2000, 1000]
-    resultado = []
-
-    for denominacion in denominaciones:
-        cantidad = monto // denominacion
-        resultado.append([cantidad, denominacion])
-        monto -= cantidad * denominacion
-
-    return resultado
-
+    return desglosarBilletesAuxiliar(monto, 0)
 #print(desglosarBilletes(125000))
 
 
