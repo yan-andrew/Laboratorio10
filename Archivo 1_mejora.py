@@ -10,15 +10,15 @@ def convertirABinario(pNum):
 print(convertirABinario(17))
 
 def esPalindromo(pNum):
-    pNum = str(pNum)
-    indice = 0
-    indice_negativo = -1
-    while (indice < len(pNum) // 2):
-        if (pNum[indice] != pNum[indice_negativo]):
-            return False
-        indice += 1
-        indice_negativo -= 1
-    return True
+    numeroInvertido = 0
+    numero = pNum
+    while (numero > 0):
+        numeroInvertido = (numeroInvertido * 10) + (numero % 10)
+        numero = numero // 10
+    if (numeroInvertido == pNum):
+        return True
+    else: 
+        return False
 
 def determinarBinarioPalindromo(pNum):
     if esPalindromo(convertirABinario(pNum)) == True:
